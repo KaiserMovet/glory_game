@@ -1,7 +1,10 @@
+import logging
 from typing import Dict, Iterable, Set
 
 from flask import Flask, jsonify, make_response, request
 from flask.wrappers import Response
+
+from game import Color
 
 from .games import GAMES
 
@@ -17,7 +20,7 @@ def get_response(
     data: object | None = None,
     code: int = 201,
     message="Done",
-):
+) -> Response:
     res: Dict[str, object] = {
         "message": message,
         "code": "SUCCESS" if code == 201 else "Failure",
@@ -55,3 +58,26 @@ def get_game(game_id: str) -> Response:
     except KeyError:
         return get_response(code=404, message="Game not found")
     return get_response(game.get_data())
+
+
+@app.route("/api/game/<game_id>/player/<player_name>", methods=["POST"])
+def make_move(game_id: str, player_name: str) -> Response:
+    game = GAMES.get_game(game_id)
+    move = request.json["move"]
+    match move["type"]:
+        case "get3":
+            colors = {Color[color.upper()] for color in move["colors"]}
+            game.get_3_coins(player_name, colors)
+            return get_response()
+        case "get2":
+            color = move["color"].upper()
+            game.get_2_coins(player_name, color)
+            return get_response()
+        case "buy":
+            card_id = move["card_id"]
+            game.buy_card(player_name, card_id)
+            return get_response()
+        case "pass":
+            game.pass_move(player_name)
+            return get_response()
+    return get_response(message="Wrong type of move", code=404)
