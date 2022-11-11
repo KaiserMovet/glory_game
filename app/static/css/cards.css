@@ -1,0 +1,109 @@
+.card {
+    display: inline-block;
+    width: min(15%, 300px);
+    padding: 1em;
+    border-radius: 15px;
+    margin: 10px;
+    background: #ddd;
+    text-align: left;
+    box-shadow: 0px 5px 20px -10px #111;
+    position: relative;
+    transition: 0.4s;
+}
+
+.card__caption {
+    background-color: rgba(255, 255, 255, 0.65);
+    padding: 1em;
+    position: relative;
+    border-radius: 0 0 3px 3px;
+}
+
+.card__image-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    padding: 1em 1em 0;
+    border-radius: 3px 3px 0 0;
+}
+
+.card__value {
+    position: absolute;
+    top: 2em;
+    right: 1em;
+    transform: translateY(-50%) scale(200%);
+    color: #fff;
+    text-transform: uppercase;
+    font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+    letter-spacing: 0.1em;
+    padding: 0.25em;
+    line-height: 1;
+    border-radius: 2px;
+    background: #bbb;
+}
+
+
+.card__name {
+    font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.card__cost {
+    /* margin: 1em 0; */
+    width: 100%;
+}
+
+.card__cost th {
+    font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+    text-align: right;
+    font-weight: 300;
+}
+
+.card__cost th,
+.card__cost td {
+    width: 50%;
+    padding: 0.25em 0.5em 0;
+}
+
+.card:nth-child(1) {
+    transform: translateY(0px) rotate(2deg);
+}
+
+.card:nth-child(2) {
+    transform: translateY(0px) rotate(0deg);
+}
+
+.card:nth-child(3) {
+    transform: translateY(0px) rotate(1deg);
+}
+
+.card:nth-child(4) {
+    transform: translateY(0px) rotate(1deg);
+}
+
+.card:nth-child(5) {
+    transform: translateY(0px) rotate(-3deg);
+}
+
+.card:nth-child(6) {
+    transform: translateY(0px) rotate(2deg);
+}
+
+.card:nth-child(7) {
+    transform: translateY(0px) rotate(4deg);
+}
+
+.card:nth-child(8) {
+    transform: translateY(0px) rotate(2deg);
+}
+
+.card:nth-child(9) {
+    transform: translateY(0px) rotate(4deg);
+}
+
+.card:hover {
+    z-index: 5;
+    box-shadow: 0px 13px 30px -15px #000;
+    transform: translateY(-10px);
+}

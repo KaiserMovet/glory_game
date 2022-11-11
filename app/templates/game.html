@@ -1,0 +1,67 @@
+<script type="text/javascript" src={{ url_for('static', filename='common.js' ) }}></script>
+<script type="text/javascript" src={{ url_for('static', filename='card.js' ) }}></script>
+<script type="text/javascript" src={{ url_for('static', filename='game.js' ) }}></script>
+
+<link rel="stylesheet" href={{ url_for('static', filename='css/base.css' ) }}>
+<link rel="stylesheet" href={{ url_for('static', filename='css/colors.css' ) }}>
+<link rel="stylesheet" href={{ url_for('static', filename='css/cards.css' ) }}>
+<link rel="stylesheet" href={{ url_for('static', filename='css/cards_colors.css' ) }}>
+
+
+
+<body>
+
+    <template id="CardTemplate">
+        <!-- Stealed from https://codepen.io/csb324/pen/MXVaLj -->
+        <figure class="card">
+            <!-- <div class="card__image-container">
+                <img src="https://cdn.bulbagarden.net/upload/thumb/e/e2/133Eevee.png/1200px-133Eevee.png" alt="Eevee"
+                    class="card__image">
+            </div> -->
+
+            <figcaption class="card__caption">
+                <h1 class="card__name" id="color">Eevee</h1>
+
+                <h3 class="card__value" id="value">
+                    normal
+                </h3>
+
+                <table class="card__cost">
+                    <tbody>
+                        <tr>
+                            <th>BLACK: </th>
+                            <td id="cost_black">55</td>
+                        </tr>
+                        <tr>
+                            <th>BLUE: </th>
+                            <td id="cost_blue">55</td>
+                        </tr>
+
+                        <tr>
+                            <th>GREEN: </th>
+                            <td id="cost_green">50</td>
+                        </tr>
+
+                        <tr>
+                            <th>RED: </th>
+                            <td id="cost_red">45</td>
+                        </tr>
+                        <tr>
+                            <th>WHITE: </th>
+                            <td id="cost_white">65</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </figcaption>
+        </figure>
+    </template>
+
+    <div id="deck">
+        <div id="level1" class="deck"></div>
+        <div id="level2" class="deck"></div>
+        <div id="level3" class="deck"></div>
+    </div>
+
+
+
+</body>
