@@ -1,5 +1,7 @@
+import csv
 import logging
 from collections import ChainMap
+from pprint import pprint
 from typing import Dict, Iterable, List, Set
 
 from .card import Card, CardDict
@@ -32,15 +34,41 @@ class Game:
             2: CardDict(),
             3: CardDict(),
         }
+        self._load_cards()
+        for level in self.deck.values():
+            level.shuffle()
+
         self.deck_all: ChainMap = ChainMap(*list(self.deck.values()))
         self.current_player_index = 0
         self.coins = {}
         for color in Color:
             self.coins[color.value] = 7
 
+        pprint(self.get_data())
+
     @property
     def current_player(self) -> Player:
         return self.players[self.current_player_index]
+
+    def _load_cards(self) -> None:
+        with open("game/cards.csv", "r") as csvfile:
+            reader = csv.reader(csvfile, delimiter=";")
+            next(reader)
+            for row in reader:
+                cost_dict = {}
+                cost_dict[Color.WHITE] = int(row[3])
+                cost_dict[Color.RED] = int(row[4])
+                cost_dict[Color.GREEN] = int(row[5])
+                cost_dict[Color.BLUE] = int(row[6])
+                cost_dict[Color.BLACK] = int(row[7])
+                card = Card(
+                    color=Color[row[1].upper()],
+                    cost=cost_dict,
+                    value=int(row[2]),
+                )
+                self.deck[int(row[0])].add_card(card)
+
+        pass
 
     def next(self) -> None:
         previous_player = self.current_player
@@ -59,15 +87,18 @@ class Game:
         cards_data = {}
         for level, cards in self.deck.items():
             if get_hidden_cards:
-                cards_data[level] = [card.get_data() for card in cards]
+                cards_data[level] = [
+                    card.get_data() for card in cards.get_list()
+                ]
             else:
-                cards_data[level] = [card.get_data() for card in cards[:5]]
+                cards_data[level] = [
+                    card.get_data() for card in cards.get_list(5)
+                ]
 
         data = {"players": player_data, "deck": cards_data, "coins": self.coins}
         return data
 
     def check_player(self, player_name: str) -> None:
-        print("checking player " + player_name)
         if player_name != self.current_player.name:
             raise GameException(
                 f"{player_name} is not a current player. Current player is {self.current_player.name}"

@@ -1,16 +1,33 @@
-from dataclasses import dataclass, asdict, field
-from .color import Color
-from _collections_abc import dict_items
-from typing import Dict
+import random
+from dataclasses import asdict, dataclass, field
+from typing import Dict, List
 from uuid import uuid4
+
+from _collections_abc import dict_items
+
+from .color import Color
 
 
 class CardDict(dict):
+    def __init__(self, *args, **kwargs):
+        super().__init__(self, *args, **kwargs)
+        self.list = []
+
     def add_card(self, card) -> None:
         self[card.obj_id] = card
+        self.list.append(card)
 
     def remove_card(self, card: "Card") -> None:
         del self[card.obj_id]
+        self.list.remove(card)
+
+    def shuffle(self) -> None:
+        random.shuffle(self.list)
+
+    def get_list(self, amount_of_cards: int | None = None) -> List["Card"]:
+        if amount_of_cards is None:
+            return self.list
+        return self.list[0:amount_of_cards]
 
 
 @dataclass()

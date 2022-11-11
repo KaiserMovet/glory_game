@@ -1,0 +1,10 @@
+GLORY GAME
+<script type="text/javascript" src={{ url_for('static', filename='common.js' ) }}></script>
+<script type="text/javascript" src={{ url_for('static', filename='base.js' ) }}></script>
+Name of player:
+<input type=" text" id="player_name" name="fname" value="">
+<button id="ready_button" onclick="addPlayer()">Ready</button>
+<button id="start_button" onclick="createGame()">Start</button>
+
+Players:
+<span id="players"></span>

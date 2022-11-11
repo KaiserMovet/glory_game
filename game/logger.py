@@ -71,6 +71,6 @@ def init() -> logging.Logger:
     fileHandler.setFormatter(get_formatter())
 
     logger.addHandler(consoleHandler)
-    logger.addHandler(fileHandler)
+    # logger.addHandler(fileHandler)
 
     return logger

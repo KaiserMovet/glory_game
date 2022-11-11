@@ -1,5 +1,5 @@
-from .inventory import Inventory
 from .card import Card
+from .inventory import Inventory
 
 
 class Player:
@@ -35,3 +35,6 @@ class Player:
 
     def get_data(self) -> dict:
         return self.inventory.get_data()
+
+    def __repr__(self) -> str:
+        return f"<Player: {self.name}>"

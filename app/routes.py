@@ -1,7 +1,8 @@
 import logging
+from pprint import pprint
 from typing import Dict, Iterable, Set
 
-from flask import Flask, jsonify, make_response, request
+from flask import Flask, abort, jsonify, make_response, render_template, request
 from flask.wrappers import Response
 
 from game import Color
@@ -31,15 +32,31 @@ def get_response(
 
 
 @app.route("/")
-def index():
-    return "Web App with Python Flask!"
+def index() -> str:
+    return render_template("base.html")
 
 
-@app.route("/api/new", methods=["GET"])
+@app.route("/player/<player_name>/game")
+def game_view(player_name) -> str:
+    return render_template("game.html")
+
+
+# API functions
+
+
+@app.route("/api/new", methods=["POST"])
 def new_player() -> Response:
-    player = request.args["name"]
+    player = request.json["name"]  # type: ignore
     NAMES.add(player)
     data = {"message": "Done", "code": "SUCCESS", "response": {"name": player}}
+    print(NAMES)
+    print("111")
+    return get_response(data)
+
+
+@app.route("/api/new_players", methods=["GET"])
+def get_new_players() -> Response:
+    data = {"players": list(NAMES)}
     return get_response(data)
 
 
@@ -51,19 +68,19 @@ def new_game() -> Response:
     return get_response({"game_id": game_id})
 
 
-@app.route("/api/game/<game_id>")
-def get_game(game_id: str) -> Response:
-    try:
-        game = GAMES.get_game(game_id)
-    except KeyError:
-        return get_response(code=404, message="Game not found")
+@app.route("/api/player/<player_name>/game")
+def get_game(player_name: str) -> Response:
+    game = GAMES.get_game_by_player(player_name)
+    pprint(game)
+    if not game:
+        return abort(404)
     return get_response(game.get_data())
 
 
 @app.route("/api/game/<game_id>/player/<player_name>", methods=["POST"])
 def make_move(game_id: str, player_name: str) -> Response:
     game = GAMES.get_game(game_id)
-    move = request.json["move"]
+    move = request.json["move"]  # type: ignore
     match move["type"]:
         case "get3":
             colors = {Color[color.upper()] for color in move["colors"]}
