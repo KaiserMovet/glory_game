@@ -1,7 +1,7 @@
-from .game import Game
+from game.logger import init
+
 from .card import Card
 from .color import Color
-
-from game.logger import init
+from .game import Game, IllegalMove
 
 init()

@@ -1,7 +1,8 @@
-from dataclasses import dataclass, field
 from collections import defaultdict
+from dataclasses import dataclass, field
+from typing import Dict, List
+
 from .card import Card, CardDict
-from typing import List, Dict
 from .color import Color
 
 
@@ -12,7 +13,7 @@ class Inventory:
 
     def __post_init__(self):
         for color in Color:
-            self.coins[color.value] = 0
+            self.coins[color.value] = 2
 
     @property
     def points(self) -> int:
@@ -37,24 +38,31 @@ class Inventory:
         if coins_only:
             return self.coins[color]
         if cards_only:
-            len([card for card in self.cards.values() if card.color == color])
+            return len(
+                [card for card in self.cards.values() if card.color == color]
+            )
 
         return (
             len([card for card in self.cards.values() if card.color == color])
             + self.coins[color]
         )
 
-    def pay(self, value: int, color: Color) -> None:
+    def pay(self, value: int, color: Color) -> int:
         """
         Pay the given value of the given color. Card will be taken into account
 
         Args:
             value (int): value to pay
             color (Color): color to pay
+
+        Returns:
+            int: Coins used to pay
         """
         value = value - self.get_color_amount(color, cards_only=True)
         if value > 0:
             self.coins[color] -= value
+            return value
+        return 0
 
     def can_buy(self, card: Card) -> bool:
         """
@@ -72,16 +80,22 @@ class Inventory:
                 return False
         return True
 
-    def buy(self, card: Card) -> bool:
+    def buy(self, card: Card) -> Dict[Color, int] | None:
         """
         Buy the given card.
 
         Args:
             card (Card): card to be bought
+
+        Returns:
+            Dict[Color, int] | None: None if the card cannot be bought.
+            Otherwise dict with payment
         """
+        payment: Dict[Color, int] = {}
         if not self.can_buy(card):
-            return False
+            return None
+
         for color, amount in card.cost.items():
-            self.pay(amount, color)
+            payment[color] = self.pay(amount, color)
         self.cards.add_card(card)
-        return True
+        return payment

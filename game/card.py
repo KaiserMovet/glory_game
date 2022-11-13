@@ -19,7 +19,9 @@ class CardDict(dict):
 
     def remove_card(self, card: "Card") -> None:
         del self[card.obj_id]
-        self.list.remove(card)
+
+    def remove_card_by_id(self, card_id: str) -> None:
+        del self[card_id]
 
     def shuffle(self) -> None:
         random.shuffle(self.list)
@@ -28,6 +30,10 @@ class CardDict(dict):
         if amount_of_cards is None:
             return self.list
         return self.list[0:amount_of_cards]
+
+    def __delitem__(self, card_id: str) -> None:
+        self.list.remove(self[card_id])
+        super().__delitem__(card_id)
 
 
 @dataclass()

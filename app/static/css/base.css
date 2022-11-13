@@ -23,5 +23,26 @@ h5 {
 
 .deck {
     display: inline-block;
-    width: 100%
+    width: min(100%, 1200px);
+    border-style: double;
+}
+
+.deck_collection {
+    transform: scale(1);
+    display: flex;
+    flex-direction: column
+}
+
+.inventory {
+    display: flex;
+    flex-direction: row;
+    margin: 20px
+}
+
+.inventory>* {
+    width: 200px;
+}
+
+.active_player {
+    font-weight: bold;
 }

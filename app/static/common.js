@@ -4,8 +4,10 @@ var RequestManager = {
         this.get = function (method, aUrl, aCallback, body, ...args) {
             var anHttpRequest = new XMLHttpRequest();
             anHttpRequest.onreadystatechange = function () {
-                if (anHttpRequest.readyState == 4 && 200 <= anHttpRequest.status < 300)
-                    aCallback(JSON.parse(anHttpRequest.responseText), ...args);
+                if (anHttpRequest.readyState == 4 && 200 <= anHttpRequest.status < 300) {
+                    if (aCallback != null)
+                        aCallback(JSON.parse(anHttpRequest.responseText), ...args);
+                }
             }
 
             anHttpRequest.open(method, aUrl, true);

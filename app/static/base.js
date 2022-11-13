@@ -1,10 +1,9 @@
-console.log("dfdsf")
+
 
 
 function addPlayer() {
     let player_name = document.getElementById("player_name").value;
     PLAYER = player_name
-    console.log("Registering $player_name");
     RequestManager.postData("/api/new", console.log, { "name": player_name })
     document.getElementById('ready_button').disabled = true;
     setInterval(openGameIfReady, 1000, player_name);
@@ -25,15 +24,10 @@ function showPlayers() {
 }
 
 function openGameIfReady(player_name) {
-    console.log(player_name)
-    console.log(`/api/player/${player_name}/game`)
+
 
     function redirectToGame(body, player_name) {
-
-        console.log('redirect')
-        console.log(player_name)
         local = window.location.origin;
-        console.log(`${local}/player/${player_name}/game`)
         window.location.href = `${local}/player/${player_name}/game`;
     }
     RequestManager.getData(

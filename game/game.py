@@ -26,6 +26,25 @@ def player_move(f):
     return wrapper
 
 
+class CustomChainMap:
+    def __init__(self, list_of_dicts: List[dict]):
+        self.list_of_dicts = list_of_dicts
+
+    def __getitem__(self, key):
+        for dic in self.list_of_dicts:
+            if key in dic:
+                return dic[key]
+        raise KeyError(f"Key {key} not found")
+
+    def remove(self, key):
+        logging.info(f"Removing {key} card from deck")
+        for dic in self.list_of_dicts:
+            if key in dic:
+                del dic[key]
+                return
+        raise KeyError(f"Key {key} not found")
+
+
 class Game:
     def __init__(self, player_names: Iterable[str]) -> None:
         self.players: List[Player] = [Player(name) for name in player_names]
@@ -38,13 +57,13 @@ class Game:
         for level in self.deck.values():
             level.shuffle()
 
-        self.deck_all: ChainMap = ChainMap(*list(self.deck.values()))
+        self.deck_all: CustomChainMap = CustomChainMap(
+            list((self.deck.values()))
+        )
         self.current_player_index = 0
         self.coins = {}
         for color in Color:
             self.coins[color.value] = 7
-
-        pprint(self.get_data())
 
     @property
     def current_player(self) -> Player:
@@ -56,13 +75,13 @@ class Game:
             next(reader)
             for row in reader:
                 cost_dict = {}
-                cost_dict[Color.WHITE] = int(row[3])
-                cost_dict[Color.RED] = int(row[4])
-                cost_dict[Color.GREEN] = int(row[5])
-                cost_dict[Color.BLUE] = int(row[6])
-                cost_dict[Color.BLACK] = int(row[7])
+                cost_dict[Color.white] = int(row[3])
+                cost_dict[Color.red] = int(row[4])
+                cost_dict[Color.green] = int(row[5])
+                cost_dict[Color.blue] = int(row[6])
+                cost_dict[Color.black] = int(row[7])
                 card = Card(
-                    color=Color[row[1].upper()],
+                    color=Color[row[1].lower()],
                     cost=cost_dict,
                     value=int(row[2]),
                 )
@@ -95,7 +114,12 @@ class Game:
                     card.get_data() for card in cards.get_list(5)
                 ]
 
-        data = {"players": player_data, "deck": cards_data, "coins": self.coins}
+        data = {
+            "players": player_data,
+            "deck": cards_data,
+            "coins": self.coins,
+            "current_player": self.current_player.name,
+        }
         return data
 
     def check_player(self, player_name: str) -> None:
@@ -109,8 +133,14 @@ class Game:
     def buy_card(self, player_name, card_id: str) -> None:
         logging.info(f"Player {player_name} buy card {card_id}")
         card = self.deck_all[card_id]
-        self.current_player.buy(card)
-        del self.deck_all[card_id]
+        payment = self.current_player.buy(card)
+        if payment is None:
+            raise IllegalMove(
+                f"Player {player_name} cannot buy card: {card_id}"
+            )
+        self.deck_all.remove(card_id)
+        for color, coins in payment.items():
+            self.coins[color] += coins
 
     @player_move
     def get_3_coins(self, player_name, colors: Set[Color]) -> None:

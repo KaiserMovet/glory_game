@@ -2,8 +2,8 @@ from enum import Enum, auto
 
 
 class Color(str, Enum):
-    WHITE = "white"
-    RED = "red"
-    GREEN = "green"
-    BLUE = "blue"
-    BLACK = "black"
+    white = "white"
+    red = "red"
+    green = "green"
+    blue = "blue"
+    black = "black"

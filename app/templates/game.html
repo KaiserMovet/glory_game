@@ -1,24 +1,25 @@
 <script type="text/javascript" src={{ url_for('static', filename='common.js' ) }}></script>
 <script type="text/javascript" src={{ url_for('static', filename='card.js' ) }}></script>
+<script type="text/javascript" src={{ url_for('static', filename='player.js' ) }}></script>
 <script type="text/javascript" src={{ url_for('static', filename='game.js' ) }}></script>
 
 <link rel="stylesheet" href={{ url_for('static', filename='css/base.css' ) }}>
 <link rel="stylesheet" href={{ url_for('static', filename='css/colors.css' ) }}>
 <link rel="stylesheet" href={{ url_for('static', filename='css/cards.css' ) }}>
+<link rel="stylesheet" href={{ url_for('static', filename='css/chips.css' ) }}>
 <link rel="stylesheet" href={{ url_for('static', filename='css/cards_colors.css' ) }}>
 
 
 
 <body>
 
+    <!-- Stealed from https://codepen.io/csb324/pen/MXVaLj -->
     <template id="CardTemplate">
-        <!-- Stealed from https://codepen.io/csb324/pen/MXVaLj -->
         <figure class="card">
             <!-- <div class="card__image-container">
                 <img src="https://cdn.bulbagarden.net/upload/thumb/e/e2/133Eevee.png/1200px-133Eevee.png" alt="Eevee"
                     class="card__image">
             </div> -->
-
             <figcaption class="card__caption">
                 <h1 class="card__name" id="color">Eevee</h1>
 
@@ -28,38 +29,85 @@
 
                 <table class="card__cost">
                     <tbody>
+                        {% for color in ['black', 'blue', 'green', 'red', 'white'] %}
                         <tr>
-                            <th>BLACK: </th>
-                            <td id="cost_black">55</td>
+                            <th>{{ color }}: </th>
+                            <td id="cost_{{ color }}"></td>
                         </tr>
-                        <tr>
-                            <th>BLUE: </th>
-                            <td id="cost_blue">55</td>
-                        </tr>
-
-                        <tr>
-                            <th>GREEN: </th>
-                            <td id="cost_green">50</td>
-                        </tr>
-
-                        <tr>
-                            <th>RED: </th>
-                            <td id="cost_red">45</td>
-                        </tr>
-                        <tr>
-                            <th>WHITE: </th>
-                            <td id="cost_white">65</td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </figcaption>
         </figure>
     </template>
 
-    <div id="deck">
+
+
+    <template id="ChipTemplate">
+        <div id="count" class="chip"> <span>$</span></div>
+    </template>
+
+    <div id="deck" class="deck_collection">
         <div id="level1" class="deck"></div>
         <div id="level2" class="deck"></div>
         <div id="level3" class="deck"></div>
+        <div id="deck_chips" class="deck_chips">
+            {% for color in ['black', 'blue', 'green', 'red', 'white'] %}
+            <div id="deck_chips_{{ color }}" class="chips" onCLick="Game.addChipToBusket('{{color}}')"></div>
+            {% endfor %}
+            <div id="deck_chips_buy" class="chips chips-busket"></div>
+            <button id="deck_chips_buy_button" disabled class="" onClick="Game.getChips()">Buy</button>
+            <button id="deck_chips_refresh_button" class="" onClick="Game.refresh()">Refresh</button>
+
+        </div>
+
+
+    </div>
+
+    <table id="score_table">
+
+    </table>
+
+    <template id="ScoreTableRowTemplate">
+        <tr>
+            <td id="sc_name"></td>
+            <td id="sc_score"></td>
+            <td id="sc_black"></td>
+            <td id="sc_blue"></td>
+            <td id="sc_green"></td>
+            <td id="sc_red"></td>
+            <td id="sc_white"></td>
+        </tr>
+    </template>
+
+
+
+
+    <!-- Chips Stealed from https://codepen.io/DevEarley/pen/mOgVQx -->
+    <div id="main_player_deck">
+        <div id="name"></div>
+        <div id="inventory" class="inventory">
+            {% for color in ['black', 'blue', 'green', 'red', 'white'] %}
+            <div id="{{ color }}">
+                <div id="coins_{{ color }}">
+                    <div id="main_player_chip_{{ color }}" class="chips">
+                    </div>
+
+                </div>
+
+                <figure class="cardinv card--{{ color }}">
+                    <!-- <div class="card__image-container">
+                <img src="https://cdn.bulbagarden.net/upload/thumb/e/e2/133Eevee.png/1200px-133Eevee.png" alt="Eevee"
+                    class="card__image">
+            </div> -->
+                    <figcaption class="cardinv__caption">
+                        <h1 class="card__name" id="cards_{{ color }}">0</h1>
+                    </figcaption>
+                </figure>
+
+            </div>
+            {% endfor %}
+        </div>
     </div>
 
 

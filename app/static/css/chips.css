@@ -1,0 +1,100 @@
+.chip--black {
+    background: radial-gradient(var(--black1), var(--black2));
+}
+
+.chip--blue {
+    background: radial-gradient(var(--blue1), var(--blue2));
+}
+
+.chip--green {
+    background: radial-gradient(var(--green1), var(--green2));
+}
+
+.chip--red {
+    background: radial-gradient(var(--red1), var(--red2));
+}
+
+.chip--white {
+    background: radial-gradient(var(--white1), var(--white2));
+}
+
+.chips:hover .chip {
+    font-size: 16px;
+}
+
+
+
+.chip {
+
+
+    cursor: pointer;
+    margin-top: 0px;
+    font-size: 14px;
+    position: absolute;
+    left: 2pt;
+    line-height: 32pt;
+    z-index: 4;
+    content: '';
+    padding: 0;
+    display: inline-block;
+    color: #FFFFFF;
+    font-weight: bold;
+    border-radius: 32pt;
+    width: 32pt;
+    border: 2px solid #FFF;
+    border-top: 3px solid #FFF;
+    border-bottom: 0px solid #FFF;
+    height: 32pt;
+    -webkit-box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.2);
+}
+
+.chip:before {
+
+    /* counter-increment: section; */
+    content: "";
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 5pt dotted #FFF;
+    display: inline;
+    border-radius: 26pt;
+    width: 22pt;
+    background-color: transparent;
+    height: 22pt;
+
+}
+
+.chips {
+    position: relative;
+    display: inline-block;
+    width: 38pt;
+    height: 80pt;
+    margin-bottom: -30pt;
+
+}
+
+.chips:before {
+
+    content: '';
+    display: inline-block;
+    border-radius: 0 0 40pt 40pt;
+    width: 36pt;
+    height: 20pt;
+
+}
+
+.deck_chips {
+    display: inline-block;
+    width: min(100%, 1200px);
+}
+
+.deck_chips_disable {
+    opacity: 0.3;
+}
+
+.chips-busket {
+    background: rgba(141, 141, 141, 0.338);
+}

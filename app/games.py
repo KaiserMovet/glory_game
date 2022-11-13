@@ -20,8 +20,6 @@ class Games:
 
     def get_game_by_player(self, player_name: str) -> Game | None:
         for _, game in self.games.items():
-            print("dfsfsdfsdf")
-            print(player_name, game.game.players)
             if player_name in [player.name for player in game.game.players]:
                 return game.game
         return None

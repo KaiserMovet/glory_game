@@ -1,4 +1,7 @@
+from typing import Dict
+
 from .card import Card
+from .color import Color
 from .inventory import Inventory
 
 
@@ -24,12 +27,16 @@ class Player:
         """
         return self.inventory.can_buy(card)
 
-    def buy(self, card: Card) -> bool:
+    def buy(self, card: Card) -> Dict[Color, int] | None:
         """
         Buy the given card.
 
         Args:
             card (Card): card to be bought
+
+        Returns:
+            Dict[Color, int] | None: None if the card cannot be bought.
+            Otherwise dict with payment
         """
         return self.inventory.buy(card)
 

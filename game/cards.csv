@@ -6,7 +6,7 @@ level;color;value;cost_white;cost_red;cost_green;cost_blue;cost_black
 1;black;0;1;1;1;0;2
 2;white;1;2;1;1;0;0
 2;red;1;1;1;2;1;0
-2;green;1;0;0;0;0;0
+2;green;1;0;0;3;0;0
 2;blue;1;0;0;1;0;3
 2;black;1;1;1;1;1;0
 3;white;2;4;2;2;1;0

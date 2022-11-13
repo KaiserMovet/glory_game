@@ -11,17 +11,33 @@ class Card {
     getTemplate() {
         return document.getElementById("CardTemplate").content.cloneNode(true);
     }
+    getInvTemplate() {
+        return document.getElementById("CardInvTemplate").content.cloneNode(true);
+    }
 
-    getHTML() {
+    getHTML(player = null) {
+        let can_be_bought = Game.getCurrentPlayer().canBuyCard(this)
         var template = this.getTemplate()
         template.firstElementChild.classList.add(`card--${this.color}`);
+
+        if (can_be_bought) {
+            template.firstElementChild.classList.add('buyable')
+            template.firstElementChild.setAttribute("onclick", `Game.buyCard('${this.obj_id}')`)
+        }
         template.firstElementChild.id = this.obj_id;
         template.getElementById("color").innerHTML = this.color
         template.getElementById("value").innerHTML = this.value
         for (const [color, cost] of Object.entries(this.cost)) {
-            console.log(`cost_${color}`)
             template.getElementById(`cost_${color}`).innerHTML = cost.toString()
+            if (player != null) {
+                let score = player.getColorScore(color)
+                if (score < cost) {
+                    template.getElementById(`cost_${color}`).innerHTML += ` (${score - cost})`
+                }
+            }
         }
         return template
     }
+
+
 }
