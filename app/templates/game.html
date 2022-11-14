@@ -1,3 +1,5 @@
+{% extends "main.html" %}
+{% block imports %}
 <script type="text/javascript" src={{ url_for('static', filename='common.js' ) }}></script>
 <script type="text/javascript" src={{ url_for('static', filename='card.js' ) }}></script>
 <script type="text/javascript" src={{ url_for('static', filename='player.js' ) }}></script>
@@ -8,14 +10,16 @@
 <link rel="stylesheet" href={{ url_for('static', filename='css/cards.css' ) }}>
 <link rel="stylesheet" href={{ url_for('static', filename='css/chips.css' ) }}>
 <link rel="stylesheet" href={{ url_for('static', filename='css/cards_colors.css' ) }}>
+{% endblock %}
+{% block content %}
 
 
 
-<body>
+<div id="templates">
 
     <!-- Stealed from https://codepen.io/csb324/pen/MXVaLj -->
     <template id="CardTemplate">
-        <figure class="card">
+        <figure class="card w-18">
             <!-- <div class="card__image-container">
                 <img src="https://cdn.bulbagarden.net/upload/thumb/e/e2/133Eevee.png/1200px-133Eevee.png" alt="Eevee"
                     class="card__image">
@@ -47,69 +51,97 @@
         <div id="count" class="chip"> <span>$</span></div>
     </template>
 
-    <div id="deck" class="deck_collection">
-        <div id="level1" class="deck"></div>
-        <div id="level2" class="deck"></div>
-        <div id="level3" class="deck"></div>
-        <div id="deck_chips" class="deck_chips">
-            {% for color in ['black', 'blue', 'green', 'red', 'white'] %}
-            <div id="deck_chips_{{ color }}" class="chips" onCLick="Game.addChipToBusket('{{color}}')"></div>
-            {% endfor %}
-            <div id="deck_chips_buy" class="chips chips-busket"></div>
-            <button id="deck_chips_buy_button" disabled class="" onClick="Game.getChips()">Buy</button>
-            <button id="deck_chips_refresh_button" class="" onClick="Game.refresh()">Refresh</button>
+</div>
 
+<div class="container">
+    <div class="">
+
+        <!-- Score -->
+        <table class="table col" id="score_table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">black</th>
+                    <th scope="col">blue</th>
+                    <th scope="col">green</th>
+                    <th scope="col">red</th>
+                    <th scope="col">white</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+        <!-- Deck -->
+        <div id="deck" class="row">
+
+            <div id="level1" class="deck1 border rounded"></div>
+            <div id="level2" class="deck2 border rounded"></div>
+            <div id="level3" class="deck3 border rounded"></div>
+
+            <div id="deck_chips" class=" container text-center row">
+                <div class="col">
+                    {% for color in ['black', 'blue', 'green', 'red', 'white'] %}
+                    <div id="deck_chips_{{ color }}" class="chips " onCLick="Game.addChipToBusket('{{color}}')"></div>
+                    {% endfor %}
+                </div>
+                <div class="col">
+                    <div id="deck_chips_buy" class="chips chips-busket rounded "></div>
+                    <button id="deck_chips_buy_button" disabled class="" onClick="Game.getChips()">Buy</button>
+                    <button id="deck_chips_refresh_button" class="" onClick="Game.refresh()">Refresh</button>
+                </div>
+            </div>
         </div>
 
+        <!-- Player -->
+        <div id="main_player_deck" class="row">
+            <div id="name"></div>
+            <div id="inventory" class="inventory card-group">
+                {% for color in ['black', 'blue', 'green', 'red', 'white'] %}
+                <div id="{{ color }} col card">
+                    <div id="coins_{{ color }}">
+                        <div id="main_player_chip_{{ color }}" class="chips">
+                        </div>
 
-    </div>
-
-    <table id="score_table">
-
-    </table>
-
-    <template id="ScoreTableRowTemplate">
-        <tr>
-            <td id="sc_name"></td>
-            <td id="sc_score"></td>
-            <td id="sc_black"></td>
-            <td id="sc_blue"></td>
-            <td id="sc_green"></td>
-            <td id="sc_red"></td>
-            <td id="sc_white"></td>
-        </tr>
-    </template>
-
-
-
-
-    <!-- Chips Stealed from https://codepen.io/DevEarley/pen/mOgVQx -->
-    <div id="main_player_deck">
-        <div id="name"></div>
-        <div id="inventory" class="inventory">
-            {% for color in ['black', 'blue', 'green', 'red', 'white'] %}
-            <div id="{{ color }}">
-                <div id="coins_{{ color }}">
-                    <div id="main_player_chip_{{ color }}" class="chips">
                     </div>
 
+                    <figure class="cardinv card--{{ color }}">
+                        <!-- <div class="card__image-container">
+                        <img src="https://cdn.bulbagarden.net/upload/thumb/e/e2/133Eevee.png/1200px-133Eevee.png" alt="Eevee"
+                            class="card__image">
+                    </div> -->
+                        <figcaption class="cardinv__caption">
+                            <h1 class="card__name" id="cards_{{ color }}">0</h1>
+                        </figcaption>
+                    </figure>
+
                 </div>
-
-                <figure class="cardinv card--{{ color }}">
-                    <!-- <div class="card__image-container">
-                <img src="https://cdn.bulbagarden.net/upload/thumb/e/e2/133Eevee.png/1200px-133Eevee.png" alt="Eevee"
-                    class="card__image">
-            </div> -->
-                    <figcaption class="cardinv__caption">
-                        <h1 class="card__name" id="cards_{{ color }}">0</h1>
-                    </figcaption>
-                </figure>
-
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
+
     </div>
+</div>
+<template id="ScoreTableRowTemplate">
+
+    <tr>
+        <td id="sc_name"></td>
+        <td id="sc_score"></td>
+        <td id="sc_black"></td>
+        <td id="sc_blue"></td>
+        <td id="sc_green"></td>
+        <td id="sc_red"></td>
+        <td id="sc_white"></td>
+    </tr>
+
+</template>
 
 
 
-</body>
+
+<!-- Chips Stealed from https://codepen.io/DevEarley/pen/mOgVQx -->
+
+
+{% endblock %}

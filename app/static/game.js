@@ -137,6 +137,7 @@ class Game {
         chip.innerHTML = 1
         var current_amount = busket.children.length
         chip.setAttribute('style', `top: ${current_amount * 6 * 3}pt;`)
+        chip.classList.remove(`chip-mess`)
         busket.appendChild(chip)
         this.analyzeBusket()
 
@@ -174,8 +175,10 @@ class Deck {
         for (let i = start; i < end; i++) {
             var chip = document.getElementById("ChipTemplate").content.cloneNode(true);
             chip.firstElementChild.classList.add(`chip--${color}`)
+            chip.firstElementChild.classList.add(`chip-mess`)
+
             chip.firstElementChild.innerHTML = i + 1
-            chip.firstElementChild.setAttribute('style', `top: ${i * 6}pt;`)
+            // chip.firstElementChild.setAttribute('style', `top: ${i * 6}pt;`)
             chip.firstElementChild.setAttribute('coin_color', color)
 
             chips.push(chip)
@@ -309,12 +312,17 @@ class ScoreTable {
         return document.getElementById("score_table")
     }
 
+    static getTBody() {
+        return this.getTable().querySelector('tbody')
+    }
+
     static initTable(players) {
-        var table = this.getTable()
+        var table = this.getTBody()
         for (const [name, player] of Object.entries(players)) {
-            let row = document.getElementById("ScoreTableRowTemplate").content.cloneNode(true);
+            let row = document.querySelector("#ScoreTableRowTemplate").content.cloneNode(true);
             row.firstElementChild.id = `sc_row_${name}`
-            row.getElementById("sc_name").innerHTML = name
+
+            row.querySelector("#sc_name").innerHTML = name
             table.appendChild(row)
         }
     }
@@ -323,8 +331,8 @@ class ScoreTable {
         for (const [name, player] of Object.entries(players)) {
             let row = document.getElementById(`sc_row_${name}`)
             if (active_player_name == name) {
-                row.classList.add("active_player")
-            } else row.classList.remove("active_player")
+                row.classList.add("table-active")
+            } else row.classList.remove("table-active")
             row.querySelector("#sc_score").innerHTML = player.getTotalScore()
             row.querySelector("#sc_black").innerHTML = `${player.getColorCardScore('black')} + ${player.coins["black"]}`
             row.querySelector("#sc_blue").innerHTML = `${player.getColorCardScore('blue')} + ${player.coins["blue"]}`
@@ -336,7 +344,7 @@ class ScoreTable {
     }
 
     static render(data) {
-        if (this.getTable().children.length == 0) this.initTable(data.players)
+        if (this.getTBody().children.length == 0) this.initTable(data.players)
         this.updateTable(data.players, data['current_player'])
     }
 }
@@ -361,11 +369,12 @@ function get_data() {
 
 class Inter {
     static get_data_inter = null
+    static get_data_time = 15000
 
     static get_data() {
         if (this.get_data_inter != null) clearInterval(this.get_data_inter)
         get_data()
-        this.get_data_inter = setInterval(get_data, 1000)
+        this.get_data_inter = setInterval(get_data, this.get_data_time)
 
     }
 

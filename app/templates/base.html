@@ -1,6 +1,10 @@
-GLORY GAME
-<script type="text/javascript" src={{ url_for('static', filename='common.js' ) }}></script>
+{% extends "main.html" %}
+{% block imports %}
 <script type="text/javascript" src={{ url_for('static', filename='base.js' ) }}></script>
+{% endblock %}
+{% block content %}
+
+GLORY GAME
 Name of player:
 <input type=" text" id="player_name" name="fname" value="">
 <button id="ready_button" onclick="addPlayer()">Ready</button>
@@ -8,3 +12,4 @@ Name of player:
 
 Players:
 <span id="players"></span>
+{% endblock %}

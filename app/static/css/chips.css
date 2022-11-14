@@ -52,9 +52,8 @@
 
 .chip:before {
 
-    /* counter-increment: section; */
-    content: "";
-
+    /* Doesnt work  */
+    /* content: ""; */
     position: absolute;
     left: 0;
     top: 0;
@@ -71,8 +70,8 @@
     position: relative;
     display: inline-block;
     width: 38pt;
-    height: 80pt;
-    margin-bottom: -30pt;
+    height: 25pt;
+    margin: 2pt;
 
 }
 
@@ -87,8 +86,11 @@
 }
 
 .deck_chips {
-    display: inline-block;
-    width: min(100%, 1200px);
+    /* display: inline-block;
+    width: min(100%, 1200px); */
+    background: rgba(54, 42, 0, 0.338);
+    /* height: 6em; */
+
 }
 
 .deck_chips_disable {
@@ -97,4 +99,40 @@
 
 .chips-busket {
     background: rgba(141, 141, 141, 0.338);
+    height: 6em;
+}
+
+.chip-mess:nth-last-child(1) {
+    top: 5pt;
+    left: 0pt
+}
+
+.chip-mess:nth-last-child(2) {
+    top: 10pt;
+    left: 4pt
+}
+
+.chip-mess:nth-last-child(3) {
+    top: 6pt;
+    left: 4pt
+}
+
+.chip-mess:nth-last-child(4) {
+    top: 8pt;
+    left: -3pt
+}
+
+.chip-mess:nth-last-child(5) {
+    top: 4pt;
+    left: -2pt
+}
+
+.chip-mess:nth-last-child(6) {
+    top: 2pt;
+    left: 6pt
+}
+
+.chip-mess:nth-last-child(7) {
+    top: 0pt;
+    left: -3pt
 }

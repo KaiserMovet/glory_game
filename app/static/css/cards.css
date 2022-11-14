@@ -1,6 +1,6 @@
 .card {
     display: inline-block;
-    width: min(15%, 200px);
+    width: max(15%, 200px) !important;
     padding: 1em;
     border-radius: 15px;
     margin: 10px;
@@ -13,7 +13,7 @@
 
 .cardinv {
     display: inline-block;
-    width: min(80%, 200px);
+    /* width: min(80%, 200px); */
     padding: 1em;
     border-radius: 15px;
     margin: 10px;
@@ -55,9 +55,9 @@
 
 .card__value {
     position: absolute;
-    top: 2em;
-    right: 1em;
-    transform: translateY(-50%) scale(200%);
+    top: 1em;
+    right: 0.3em;
+    transform: translateY(-50%) scale(100%);
     color: #fff;
     text-transform: uppercase;
     font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
