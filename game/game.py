@@ -154,8 +154,10 @@ class Game:
         data = {
             "players": player_data,
             "deck": cards_data,
+            'cards_in_deck': {level: len(cards) for level, cards in self.deck.items()},
             "coins": self.coins,
             "current_player": self.current_player.name,
+            
         }
         return data
 
