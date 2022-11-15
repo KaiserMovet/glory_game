@@ -7,6 +7,8 @@ from typing import Dict, Iterable, List, Set
 from .card import Card, CardDict
 from .color import Color
 from .player import Player
+import random
+GENERATE_CARDS = True
 
 
 class GameException(Exception):
@@ -69,7 +71,7 @@ class Game:
     def current_player(self) -> Player:
         return self.players[self.current_player_index]
 
-    def _load_cards(self) -> None:
+    def _load_cards_from_csv(self):
         with open("game/cards.csv", "r") as csvfile:
             reader = csv.reader(csvfile, delimiter=";")
             next(reader)
@@ -87,7 +89,42 @@ class Game:
                 )
                 self.deck[int(row[0])].add_card(card)
 
-        pass
+    @staticmethod
+    def  _generate_card(color: Color, total_cost:List, values:List) -> Card:
+        cost = {color2: 0 for color2 in Color}
+        other_colors: List[Color] = [color2 for color2 in Color if color2 is not color]
+        for _ in range(random.choice(total_cost)):
+            cost[random.choice(other_colors)] += 1
+        card = Card(color=color, cost=cost, value=random.choice(values))
+        return card
+
+
+    def _generate_cards(self) -> None:
+        for color in Color:
+            # Level 1
+            for _ in range(25):
+                self.deck[1].add_card(self._generate_card(
+                    color = color,
+                    total_cost = [3]*3 + [4] * 1,
+                    values = [0]))
+            # Level 2
+            for _ in range(15):
+                self.deck[2].add_card(self._generate_card(
+                    color = color,
+                    total_cost = [5] * 1 + [6]*3 + [7] * 1,
+                    values = [0] + [1] * 4 + [2] * 2
+                    ))
+            # Level 3
+            for _ in range(5):
+                self.deck[3].add_card(self._generate_card(
+                    color = color,
+                    total_cost = [7] + [8]*3 + [9] * 1,
+                    values = [3]* 2 + [4] + [5]))
+
+    def _load_cards(self) -> None:
+        if not GENERATE_CARDS:
+            self._load_cards_from_csv()
+        self._generate_cards()
 
     def next(self) -> None:
         previous_player = self.current_player
