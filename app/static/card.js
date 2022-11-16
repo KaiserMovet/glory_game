@@ -28,7 +28,7 @@ class Card {
         let can_be_bought = Game.getCurrentPlayer().canBuyCard(this)
         var template = this.getTemplate()
         template.firstElementChild.classList.add(`card--${this.color}`);
-        template.getElementById(`card_img`).setAttribute('style', `background-image: url(${this.bg_url});`)
+        template.firstElementChild.setAttribute('style', `background-image: url(${this.bg_url});`)
 
         if (can_be_bought) {
             template.firstElementChild.classList.add('buyable')
@@ -37,6 +37,7 @@ class Card {
         template.firstElementChild.id = this.obj_id;
         // template.getElementById("color").innerHTML = this.color
         template.getElementById("value").innerHTML = this.value
+        template.getElementById("value").classList.add(`card--${this.color}`)
         for (const [color, cost] of Object.entries(this.cost)) {
             // template.getElementById(`cost_${color}`).innerHTML = cost.toString()
             if (cost == '0') {

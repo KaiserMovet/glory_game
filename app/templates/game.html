@@ -19,30 +19,25 @@
     <!-- Stealed from https://codepen.io/csb324/pen/MXVaLj -->
     <template id="CardTemplate">
         <figure class="card w-18 ">
-            <div id="card_img" class="card_img"
-                style="background-image: url(http://127.0.0.1:81/static/bg/green/3.png);">
-                <!-- <div class="card__image-container">
-                <img src="https://cdn.bulbagarden.net/upload/thumb/e/e2/133Eevee.png/1200px-133Eevee.png" alt="Eevee"
-                    class="card__image">
-            </div> -->
-                <figcaption class="card__caption">
-                    <div>
-                        <h1 class="card__name bi-gem" id="value">Eevee</h1>
+
+            <!-- <figcaption class="card__caption"> -->
+
+            <h1 class="card__name bi-gem" id="value">Eevee</h1>
 
 
-                    </div>
-                    <div class="">
-                        {% for color in ['black', 'blue', 'green', 'red', 'white'] %}
-                        <div class="progress solid solid-{{ color }}">
-                            <div id="cost_{{ color }}" class="progress-bar progress-bar-striped card-bg-{{ color }}"
-                                role="progressbar" style="width: 10%"></div>
-                            <div id="cost2_{{ color }}" class="progress-bar card-bg2-{{ color }}" role="progressbar"
-                                style="width: 100%"></div>
-                        </div>
-                        {% endfor %}
-                        </table>
-                </figcaption>
-            </div>
+
+            <div class="">
+                {% for color in ['black', 'blue', 'green', 'red', 'white'] %}
+                <div class="progress solid solid-{{ color }}">
+                    <div id="cost_{{ color }}" class="progress-bar progress-bar-striped card-bg-{{ color }}"
+                        role="progressbar" style="width: 10%"></div>
+                    <div id="cost2_{{ color }}" class="progress-bar card-bg2-{{ color }}" role="progressbar"
+                        style="width: 100%"></div>
+                </div>
+                {% endfor %}
+                </table>
+                <!-- </figcaption> -->
+
         </figure>
     </template>
 
