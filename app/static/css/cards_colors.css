@@ -17,7 +17,7 @@
 
 .card--black {
     background: linear-gradient(20deg, var(--black1) 10%, var(--black2) 100%);
-    color: rgb(194, 194, 194)
+    /* color: rgb(194, 194, 194) */
 }
 
 .card--black .card__value {

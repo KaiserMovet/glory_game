@@ -46,7 +46,7 @@ class Card:
 
     def __post_init__(self) -> None:
         if self.bg is None:
-            self.bg = random.randint(1, 5)
+            self.bg = random.randint(1, 100)
 
     def get_data(self) -> dict:
         data = asdict(self)

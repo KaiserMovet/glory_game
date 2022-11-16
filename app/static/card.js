@@ -1,3 +1,6 @@
+ColorsBG = {
+    black: 14, white: 10, red: 10, green: 13, blue: 12
+}
 
 
 class Card {
@@ -7,6 +10,11 @@ class Card {
         this.value = card_data.value;
         this.cost = card_data.cost;
         this.bg = card_data.bg;
+        this.bg_url = ""
+        if (this.bg > 0) {
+            var bg_index = (this.bg % ColorsBG[this.color]) + 1
+            this.bg_url = `${window.location.origin}/static/bg/${this.color}/${bg_index}.png`
+        }
     }
 
     getTemplate() {
@@ -20,6 +28,7 @@ class Card {
         let can_be_bought = Game.getCurrentPlayer().canBuyCard(this)
         var template = this.getTemplate()
         template.firstElementChild.classList.add(`card--${this.color}`);
+        template.getElementById(`card_img`).setAttribute('style', `background-image: url(${this.bg_url});`)
 
         if (can_be_bought) {
             template.firstElementChild.classList.add('buyable')

@@ -1,7 +1,7 @@
 .card {
     display: inline-block;
     width: max(15%, 200px) !important;
-    padding: 1em;
+    padding: 0.75em;
     border-radius: 15px;
     margin: 10px;
     background: #ddd;
@@ -9,7 +9,25 @@
     box-shadow: 0px 5px 20px -10px #111;
     position: relative;
     transition: 0.4s;
-    aspect-ratio: 3/ 4;
+    aspect-ratio: 512/704;
+    /* background-color: green;
+    background-size: 90% !important;
+
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    */
+}
+
+.card_img {
+    background-size: 100%;
+    margin: auto;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    object-fit: contain;
+    border-radius: 15px;
+
 }
 
 .cardinv {
@@ -41,8 +59,8 @@
 }
 
 .card__caption {
-    background-color: rgba(255, 255, 255, 0.196);
-    padding: 1em;
+    /* background-color: rgba(255, 255, 255, 0.196); */
+    padding: 0.5em;
     position: relative;
     border-radius: 0 0 3px 3px;
 }
@@ -76,10 +94,15 @@
     font-size: 1.5em;
     font-weight: 700;
     letter-spacing: 0.02em;
+    /* background-color: rgba(141, 141, 141, 0.927); */
+    size: auto;
+    /* height: 6em; */
 }
 
 .card__name {
-    margin: 5px
+    margin: 5px;
+    -webkit-text-stroke: 1px black;
+    color: white;
 }
 
 .card__cost {
