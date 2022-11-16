@@ -71,7 +71,7 @@
     display: inline-block;
     width: 38pt;
     height: 25pt;
-    margin: 2pt;
+    margin: 20px;
 
 }
 
@@ -103,36 +103,36 @@
 }
 
 .chip-mess:nth-last-child(1) {
-    top: 5pt;
+    top: 10pt;
     left: 0pt
 }
 
 .chip-mess:nth-last-child(2) {
-    top: 10pt;
-    left: 4pt
+    top: 20pt;
+    left: 8pt
 }
 
 .chip-mess:nth-last-child(3) {
-    top: 6pt;
-    left: 4pt
+    top: 12pt;
+    left: 8pt
 }
 
 .chip-mess:nth-last-child(4) {
-    top: 8pt;
-    left: -3pt
+    top: 16pt;
+    left: -6pt
 }
 
 .chip-mess:nth-last-child(5) {
-    top: 4pt;
-    left: -2pt
+    top: 8pt;
+    left: -4pt
 }
 
 .chip-mess:nth-last-child(6) {
-    top: 2pt;
-    left: 6pt
+    top: 4pt;
+    left: 12pt
 }
 
 .chip-mess:nth-last-child(7) {
     top: 0pt;
-    left: -3pt
+    left: -6pt
 }

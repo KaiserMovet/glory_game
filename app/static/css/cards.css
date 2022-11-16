@@ -40,7 +40,7 @@
 }
 
 .card__caption {
-    background-color: rgba(255, 255, 255, 0.65);
+    background-color: rgba(255, 255, 255, 0.196);
     padding: 1em;
     position: relative;
     border-radius: 0 0 3px 3px;
@@ -75,6 +75,10 @@
     font-size: 1.5em;
     font-weight: 700;
     letter-spacing: 0.02em;
+}
+
+.card__name {
+    margin: 5px
 }
 
 .card__cost {
@@ -128,6 +132,18 @@
 
 .card:nth-child(9) {
     transform: translateY(0px) rotate(4deg);
+}
+
+.deck1>* {
+    rotate: 2deg;
+}
+
+.deck2>* {
+    rotate: -3deg;
+}
+
+.deck3>* {
+    rotate: 0deg;
 }
 
 .card:hover {

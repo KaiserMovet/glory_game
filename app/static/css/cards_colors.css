@@ -17,6 +17,7 @@
 
 .card--black {
     background: linear-gradient(20deg, var(--black1) 10%, var(--black2) 100%);
+    color: rgb(194, 194, 194)
 }
 
 .card--black .card__value {
@@ -37,4 +38,60 @@
 
 .card--white .card__value {
     background: var(--white1);
+}
+
+
+.card-bg-success {
+    /* --bs-bg-opacity: 1; */
+    background-color: var(--blue1)
+}
+
+
+.card-bg-blue {
+    background-color: var(--blue1);
+}
+
+.card-bg-red {
+    background-color: var(--red1);
+}
+
+.card-bg-black {
+    background-color: var(--black1);
+}
+
+.card-bg-green {
+    background-color: var(--green2);
+}
+
+.card-bg-white {
+    background-color: var(--white1);
+}
+
+.solid {
+    border-style: solid;
+}
+
+.solid-blue {
+    border-color: var(--blue1);
+    background-color: var(--blue2);
+}
+
+.solid-red {
+    border-color: var(--red1);
+    background-color: var(--red2);
+}
+
+.solid-black {
+    border-color: var(--black1);
+    background-color: var(--black2);
+}
+
+.solid-green {
+    border-color: var(--green2);
+    background-color: var(--green1);
+}
+
+.solid-white {
+    border-color: var(--white1);
+    background-color: var(--white2);
 }

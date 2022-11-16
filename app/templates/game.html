@@ -14,7 +14,6 @@
 {% block content %}
 
 
-
 <div id="templates">
 
     <!-- Stealed from https://codepen.io/csb324/pen/MXVaLj -->
@@ -25,22 +24,20 @@
                     class="card__image">
             </div> -->
             <figcaption class="card__caption">
-                <h1 class="card__name" id="color">Eevee</h1>
+                <div>
+                    <h1 class="card__name bi-gem" id="value">Eevee</h1>
 
-                <h3 class="card__value" id="value">
-                    normal
-                </h3>
 
-                <table class="card__cost">
-                    <tbody>
-                        {% for color in ['black', 'blue', 'green', 'red', 'white'] %}
-                        <tr>
-                            <th>{{ color }}: </th>
-                            <td id="cost_{{ color }}"></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                </div>
+                <div class="">
+                    {% for color in ['black', 'blue', 'green', 'red', 'white'] %}
+                    <div class="progress solid solid-{{ color }}">
+                        <div id="cost_{{ color }}" class="progress-bar progress-bar-striped card-bg-{{ color }}"
+                            role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0"
+                            aria-valuemax="100"></div>
+                    </div>
+                    {% endfor %}
+                    </table>
             </figcaption>
         </figure>
     </template>
