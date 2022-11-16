@@ -6,6 +6,7 @@ class Card {
         this.color = card_data.color;
         this.value = card_data.value;
         this.cost = card_data.cost;
+        this.bg = card_data.bg;
     }
 
     getTemplate() {
@@ -40,8 +41,10 @@ class Card {
                 let score = player.getColorScore(color)
                 template.getElementById(`cost_${color}`).setAttribute('aria-valuenow', score);
                 template.getElementById(`cost_${color}`).setAttribute('style', `width: ${score * 100 / cost}%`);
-                if (cost > score) template.getElementById(`cost_${color}`).innerHTML = `${score}/${cost}`;
+                template.getElementById(`cost2_${color}`).setAttribute('style', `width: ${100 - (score * 100 / cost)}%`);
 
+                if (cost > score) template.getElementById(`cost_${color}`).innerHTML = `${score}/${cost}`;
+                if (score == 0) template.getElementById(`cost2_${color}`).innerHTML = cost;
 
                 // if (score < cost) {
                 //     template.getElementById(`cost_${color}`).innerHTML += ` (${score - cost})`

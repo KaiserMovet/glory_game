@@ -49,6 +49,7 @@
 
 .card-bg-blue {
     background-color: var(--blue1);
+    color: black
 }
 
 .card-bg-red {
@@ -65,6 +66,27 @@
 
 .card-bg-white {
     background-color: var(--white1);
+}
+
+.card-bg2-blue {
+    background-color: var(--blue2);
+}
+
+.card-bg2-red {
+    background-color: var(--red2);
+    color: black
+}
+
+.card-bg2-black {
+    background-color: var(--black2);
+}
+
+.card-bg2-green {
+    background-color: var(--green1);
+}
+
+.card-bg2-white {
+    background-color: var(--white2);
 }
 
 .solid {

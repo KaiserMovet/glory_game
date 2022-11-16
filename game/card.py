@@ -42,6 +42,11 @@ class Card:
     cost: Dict[Color, int]
     obj_id: str = field(default_factory=lambda: str(uuid4()))
     value: int = 0
+    bg: int | None = None
+
+    def __post_init__(self) -> None:
+        if self.bg is None:
+            self.bg = random.randint(1, 5)
 
     def get_data(self) -> dict:
         data = asdict(self)
