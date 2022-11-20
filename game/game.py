@@ -1,5 +1,6 @@
 import csv
 import logging
+import random
 from collections import ChainMap
 from pprint import pprint
 from typing import Dict, Iterable, List, Set
@@ -7,8 +8,11 @@ from typing import Dict, Iterable, List, Set
 from .card import Card, CardDict
 from .color import Color
 from .player import Player
-import random
+
 GENERATE_CARDS = True
+CARDS_LEVEL_1 = 40
+CARDS_LEVEL_2 = 30
+CARDS_LEVEL_3 = 20
 
 
 class GameException(Exception):
@@ -38,13 +42,16 @@ class CustomChainMap:
                 return dic[key]
         raise KeyError(f"Key {key} not found")
 
-    def remove(self, key):
+    def __delitem__(self, key):
         logging.info(f"Removing {key} card from deck")
         for dic in self.list_of_dicts:
             if key in dic:
                 del dic[key]
                 return
         raise KeyError(f"Key {key} not found")
+
+    def remove(self, key):
+        del self[key]
 
 
 class Game:
@@ -90,36 +97,43 @@ class Game:
                 self.deck[int(row[0])].add_card(card)
 
     @staticmethod
-    def  _generate_card(color: Color, total_cost:List, values:List) -> Card:
+    def _generate_card(color: Color, total_cost: List, values: List) -> Card:
         cost = {color2: 0 for color2 in Color}
-        other_colors: List[Color] = [color2 for color2 in Color if color2 is not color]
+        other_colors: List[Color] = [
+            color2 for color2 in Color if color2 is not color
+        ]
         for _ in range(random.choice(total_cost)):
             cost[random.choice(other_colors)] += 1
         card = Card(color=color, cost=cost, value=random.choice(values))
         return card
 
-
     def _generate_cards(self) -> None:
         for color in Color:
             # Level 1
-            for _ in range(25):
-                self.deck[1].add_card(self._generate_card(
-                    color = color,
-                    total_cost = [3]*3 + [4] * 1,
-                    values = [0]))
+            for _ in range(CARDS_LEVEL_1 // 5):
+                self.deck[1].add_card(
+                    self._generate_card(
+                        color=color, total_cost=[3] * 3 + [4] * 1, values=[0]
+                    )
+                )
             # Level 2
-            for _ in range(15):
-                self.deck[2].add_card(self._generate_card(
-                    color = color,
-                    total_cost = [5] * 1 + [6]*3 + [7] * 1,
-                    values = [0] + [1] * 4 + [2] * 2
-                    ))
+            for _ in range(CARDS_LEVEL_2 // 5):
+                self.deck[2].add_card(
+                    self._generate_card(
+                        color=color,
+                        total_cost=[5] * 1 + [6] * 3 + [7] * 1,
+                        values=[0] + [1] * 4 + [2] * 2,
+                    )
+                )
             # Level 3
-            for _ in range(5):
-                self.deck[3].add_card(self._generate_card(
-                    color = color,
-                    total_cost = [7] + [8]*3 + [9] * 1,
-                    values = [3]* 2 + [4] + [5]))
+            for _ in range(CARDS_LEVEL_3 // 5):
+                self.deck[3].add_card(
+                    self._generate_card(
+                        color=color,
+                        total_cost=[7] + [8] * 3 + [9] * 1,
+                        values=[3] * 2 + [4] + [5],
+                    )
+                )
 
     def _load_cards(self) -> None:
         if not GENERATE_CARDS:
@@ -154,10 +168,11 @@ class Game:
         data = {
             "players": player_data,
             "deck": cards_data,
-            'cards_in_deck': {level: len(cards) for level, cards in self.deck.items()},
+            "cards_in_deck": {
+                level: len(cards) for level, cards in self.deck.items()
+            },
             "coins": self.coins,
             "current_player": self.current_player.name,
-            
         }
         return data
 
