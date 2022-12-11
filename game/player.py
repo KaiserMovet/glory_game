@@ -40,6 +40,9 @@ class Player:
         """
         return self.inventory.buy(card)
 
+    def is_winner(self, points_to_win: int) -> bool:
+        return points_to_win <= self.inventory.points
+
     def get_data(self) -> dict:
         return self.inventory.get_data()
 

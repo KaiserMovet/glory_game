@@ -18,15 +18,14 @@
 
     <!-- Stealed from https://codepen.io/csb324/pen/MXVaLj -->
     <template id="CardTemplate">
-        <figure class="card w-18 ">
+        <div class="card">
 
-            <!-- <figcaption class="card__caption"> -->
 
             <h1 class="card__name bi-gem" id="value">Eevee</h1>
 
 
 
-            <div class="">
+            <div class="card_costs">
                 {% for color in ['black', 'blue', 'green', 'red', 'white'] %}
                 <div class="progress solid solid-{{ color }}">
                     <div id="cost_{{ color }}" class="progress-bar progress-bar-striped card-bg-{{ color }}"
@@ -35,10 +34,17 @@
                         style="width: 100%"></div>
                 </div>
                 {% endfor %}
-                </table>
                 <!-- </figcaption> -->
 
-        </figure>
+            </div>
+        </div>
+    </template>
+
+    <template id="HiddenCardTemplate">
+        <div class="card hiddencard">
+            <h1 class="hiddencard__name" id="value">Eevee</h1>
+
+        </div>
     </template>
 
 
@@ -63,6 +69,8 @@
                     <th scope="col">green</th>
                     <th scope="col">red</th>
                     <th scope="col">white</th>
+                    <th scope="col">winner in round</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -73,11 +81,11 @@
         <!-- Deck -->
         <div id="deck" class="row">
 
-            <div id="level1" class="deck1 border rounded"></div>
-            <div id="level2" class="deck2 border rounded"></div>
-            <div id="level3" class="deck3 border rounded"></div>
+            <div id="level1" class="deck deck1 border"></div>
+            <div id="level2" class="deck deck2 border"></div>
+            <div id="level3" class="deck deck3 border"></div>
 
-            <div id="deck_chips" class=" container text-center row">
+            <div id="deck_chips" class="text-center row">
                 <div class="col">
                     {% for color in ['black', 'blue', 'green', 'red', 'white'] %}
                     <div id="deck_chips_{{ color }}" class="chips " onCLick="Game.addChipToBusket('{{color}}')"></div>
@@ -104,10 +112,7 @@
                     </div>
 
                     <figure class="cardinv card--{{ color }}">
-                        <!-- <div class="card__image-container">
-                        <img src="https://cdn.bulbagarden.net/upload/thumb/e/e2/133Eevee.png/1200px-133Eevee.png" alt="Eevee"
-                            class="card__image">
-                    </div> -->
+
                         <figcaption class="cardinv__caption">
                             <h1 class="card__name" id="cards_{{ color }}">0</h1>
                         </figcaption>
@@ -130,6 +135,8 @@
         <td id="sc_green"></td>
         <td id="sc_red"></td>
         <td id="sc_white"></td>
+        <td id="sc_winner"></td>
+
     </tr>
 
 </template>
@@ -140,4 +147,10 @@
 <!-- Chips Stealed from https://codepen.io/DevEarley/pen/mOgVQx -->
 
 
+{% endblock %}
+
+
+
+{% block footer %}
+<button type="button" class="btn btn-danger" onclick="delete_game()">Delete game</button>
 {% endblock %}

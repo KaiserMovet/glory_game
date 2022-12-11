@@ -2,7 +2,16 @@ import logging
 from pprint import pprint
 from typing import Dict, Iterable, Set
 
-from flask import Flask, abort, jsonify, make_response, render_template, request
+from flask import (
+    Flask,
+    abort,
+    jsonify,
+    make_response,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 from flask.wrappers import Response
 
 from game import Color, IllegalMove
@@ -72,6 +81,12 @@ def get_game(player_name: str) -> Response:
     if not game:
         return abort(404)
     return get_response(game.get_data())
+
+
+@app.route("/api/player/<player_name>/delete_game")
+def delete_game(player_name: str):
+    GAMES.delete_game_by_player(player_name)
+    return redirect(url_for("index"))
 
 
 @app.route("/api/player/<player_name>/move", methods=["POST"])

@@ -38,14 +38,40 @@ h5 {
     font-weight: bold;
 }
 
-.deck1 {
-    background: rgba(0, 119, 255, 0.5);
+.deck {
+    display: inline-flex;
+    justify-content: center;
 }
+
+
+
+.deck1 {
+    background: linear-gradient(90deg, var(--transparent) 0, var(--deck1) 10%, var(--deck1) 90%, var(--transparent));
+}
+
+
+.deck1>.hiddencard {
+    background: rgba(0, 119, 255);
+}
+
+
 
 .deck2 {
-    background: rgba(18, 154, 68, 0.5);
+    background: linear-gradient(90deg, var(--transparent) 0, var(--deck2) 10%, var(--deck2) 90%, var(--transparent));
+
 }
 
+.deck2>.hiddencard {
+    background: rgba(18, 154, 68);
+}
+
+
+
 .deck3 {
-    background: rgba(220, 190, 17, 0.5);
+    background: linear-gradient(90deg, var(--transparent) 0, var(--deck3) 10%, var(--deck3) 90%, var(--transparent));
+
+}
+
+.deck3>.hiddencard {
+    background: rgba(220, 190, 17);
 }

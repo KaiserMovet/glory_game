@@ -161,14 +161,20 @@ function preprareData(data) {
 
     // Prepare Players
     var new_players = {}
+    console.log(data)
     for (const [player_name, player_data] of Object.entries(data['players'])) {
-        new_players[player_name] = new Player(player_name, player_data)
+        var winner_round = null
+        if (player_name in data.winner) winner_round = data.winner[player_name]
+        new_players[player_name] = new Player(player_name, player_data, winner_round)
     }
     data['players'] = new_players
     return data
 
 }
 class Deck {
+
+    static cards = { 1: [], 2: [], 3: [] };
+    static hidden_cards = []
 
     static getChips(color, start, end) {
         var chips = []
@@ -186,41 +192,52 @@ class Deck {
         return chips
     }
 
+
     static renderDeck(data) {
         for (let level of ['1', '2', '3']) {
+
             let cards = data['deck'][level]
             let deck_div = document.getElementById(`level${level}`)
 
-            // Id of cards, that will be inserted into deck
+            // Id of cards, that should be in the deck
             let next_id_list = []
             for (let card of cards) {
                 next_id_list.push(card.obj_id)
             }
-            // Id of cards currently in deck
-            // Remove cards, if need to
+
+            // Remove cards, that should not be in the deck
+            // Save id of current cards
             let current_id_list = []
-            let child_to_remove = []
-            for (let child of deck_div.children) {
-                if (!next_id_list.includes(child.id)) {
-                    child_to_remove.push(child)
+            for (var i = this.cards[level].length - 1; i >= 0; i--) {
+                let card = this.cards[level][i]
+                if (!next_id_list.includes(card.obj_id)) {
+                    card.delete()
+                    this.cards[level].splice(i, 1);
                 } else {
-                    current_id_list.push(child.id)
+                    current_id_list.push(card.obj_id)
                 }
             }
-            for (let child of child_to_remove) {
-                deck_div.removeChild(child)
-            }
 
-            // Add cards to deck
+            // Add new cards to deck
             for (let card of cards) {
-
-                var new_child = card.getHTML(Game.getCurrentPlayer())
-
-                if (current_id_list.includes(card.obj_id)) {
-                    deck_div.replaceChild(new_child, document.getElementById(card.obj_id))
-                } else {
-                    deck_div.append(new_child)
+                if (!current_id_list.includes(card.obj_id)) {
+                    this.cards[level].push(new CardElement(card, deck_div))
                 }
+            }
+
+            // Refresh data
+            for (let card of this.cards[level]) {
+                card.update(Game.getCurrentPlayer())
+            }
+        }
+        for (let card of this.hidden_cards) {
+            card.update(data)
+        }
+        for (var i = this.hidden_cards.length - 1; i >= 0; i--) {
+            let card = this.hidden_cards[i]
+            if (card.update(data) == -1) {
+                card.delete()
+                this.hidden_cards.splice(i, 1);
             }
         }
     }
@@ -242,6 +259,17 @@ class Deck {
 
             }
         }
+    }
+
+    static initDeck() {
+        for (let level of ['1', '2', '3']) {
+            let deck_div = document.getElementById(`level${level}`)
+            console.log(deck_div)
+            this.hidden_cards.push(new HiddenCardElement(level, deck_div))
+        }
+    }
+    static init() {
+        this.initDeck()
     }
 
     static render(data) {
@@ -339,6 +367,8 @@ class ScoreTable {
             row.querySelector("#sc_green").innerHTML = `${player.getColorCardScore('green')} + ${player.coins["green"]}`
             row.querySelector("#sc_red").innerHTML = `${player.getColorCardScore('red')} + ${player.coins["red"]}`
             row.querySelector("#sc_white").innerHTML = `${player.getColorCardScore('white')} + ${player.coins["white"]}`
+            row.querySelector("#sc_winner").innerHTML = `${player.winner_round != null ? player.winner_round : ""}`
+
 
         }
     }
@@ -369,7 +399,7 @@ function get_data() {
 
 class Inter {
     static get_data_inter = null
-    static get_data_time = 15000
+    static get_data_time = 5000
 
     static get_data() {
         if (this.get_data_inter != null) clearInterval(this.get_data_inter)
@@ -384,10 +414,18 @@ class Inter {
     }
 }
 
+function delete_game() {
+    RequestManager.getData(
+        aUrl = `/api/player/${Game.getPlayerName()}/delete_game`,
+        aCallback = render,
+        body = null,
+    );
 
+}
 
 function main() {
+    Deck.init()
     Inter.get_data()
     // setInterval(get_data, 5000)
 }
-main();
+window.onload = main;

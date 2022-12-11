@@ -14,6 +14,8 @@ CARDS_LEVEL_1 = 40
 CARDS_LEVEL_2 = 30
 CARDS_LEVEL_3 = 20
 
+POINTS_TO_WIN = 20
+
 
 class GameException(Exception):
     pass
@@ -73,6 +75,10 @@ class Game:
         self.coins = {}
         for color in Color:
             self.coins[color.value] = 7
+
+        self.round = 0
+        # Dictionary with winners. Key: Player name, value: round
+        self.winners: Dict[str, int] = {}
 
     @property
     def current_player(self) -> Player:
@@ -141,6 +147,14 @@ class Game:
         self._generate_cards()
 
     def next(self) -> None:
+        # Check if we have new winner
+        if (
+            self.current_player.name not in self.winners
+            and self.current_player.is_winner(POINTS_TO_WIN)
+        ):
+            self.winners[self.current_player.name] = self.round
+
+        # Next turn
         previous_player = self.current_player
         self.current_player_index = (self.current_player_index + 1) % len(
             self.players
@@ -148,6 +162,8 @@ class Game:
         logging.info(
             f"Next player: {previous_player.name} -> {self.current_player.name}"
         )
+        if self.current_player_index == 0:
+            self.round += 1
 
     def get_data(self, get_hidden_cards=False) -> dict:
         player_data = {}
@@ -173,6 +189,7 @@ class Game:
             },
             "coins": self.coins,
             "current_player": self.current_player.name,
+            "winner": self.winners,
         }
         return data
 

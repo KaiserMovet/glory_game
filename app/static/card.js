@@ -2,7 +2,6 @@ ColorsBG = {
     black: 14, white: 10, red: 10, green: 13, blue: 12
 }
 
-
 class Card {
     constructor(card_data) {
         this.obj_id = card_data.obj_id;
@@ -17,29 +16,34 @@ class Card {
         }
     }
 
-    getTemplate() {
-        return document.getElementById("CardTemplate").content.cloneNode(true);
-    }
     getInvTemplate() {
         return document.getElementById("CardInvTemplate").content.cloneNode(true);
     }
+}
 
-    getHTML(player = null) {
-        let can_be_bought = Game.getCurrentPlayer().canBuyCard(this)
+
+class CardElement {
+    constructor(card, parent_div) {
+        this.card = card;
+        this.obj_id = card.obj_id
+        this.element_id = `card-${card.obj_id}`;
+        this.parent_div = parent_div
+        this.parent_div.append(this.getHTML())
+        this.element = this.parent_div.querySelector(`#${this.element_id}`)
+    }
+
+    getTemplate() {
+        return document.getElementById("CardTemplate").content.cloneNode(true);
+    }
+    // Generate element with all static data
+    getHTML() {
         var template = this.getTemplate()
-        template.firstElementChild.classList.add(`card--${this.color}`);
-        template.firstElementChild.setAttribute('style', `background-image: url(${this.bg_url});`)
-
-        if (can_be_bought) {
-            template.firstElementChild.classList.add('buyable')
-            template.firstElementChild.setAttribute("onclick", `Game.buyCard('${this.obj_id}')`)
-        }
-        template.firstElementChild.id = this.obj_id;
-        // template.getElementById("color").innerHTML = this.color
-        template.getElementById("value").innerHTML = this.value
-        template.getElementById("value").classList.add(`card--${this.color}`)
-        for (const [color, cost] of Object.entries(this.cost)) {
-            // template.getElementById(`cost_${color}`).innerHTML = cost.toString()
+        template.firstElementChild.classList.add(`card--${this.card.color}`);
+        template.firstElementChild.setAttribute('style', `background-image: url(${this.card.bg_url});`)
+        template.firstElementChild.id = this.element_id;
+        template.getElementById("value").innerHTML = this.card.value
+        template.getElementById("value").classList.add(`card--${this.card.color}`)
+        for (const [color, cost] of Object.entries(this.card.cost)) {
             if (cost == '0') {
                 template.getElementById(`cost_${color}`).parentNode.hidden = true
                 continue
@@ -47,23 +51,79 @@ class Card {
             template.getElementById(`cost_${color}`).setAttribute('aria-valuemax', cost);
             template.getElementById(`cost_${color}`).innerHTML = cost;
 
-            if (player != null) {
-                let score = player.getColorScore(color)
-                template.getElementById(`cost_${color}`).setAttribute('aria-valuenow', score);
-                template.getElementById(`cost_${color}`).setAttribute('style', `width: ${score * 100 / cost}%`);
-                template.getElementById(`cost2_${color}`).setAttribute('style', `width: ${100 - (score * 100 / cost)}%`);
-
-                if (cost > score) template.getElementById(`cost_${color}`).innerHTML = `${score}/${cost}`;
-                if (score == 0) template.getElementById(`cost2_${color}`).innerHTML = cost;
-
-                // if (score < cost) {
-                //     template.getElementById(`cost_${color}`).innerHTML += ` (${score - cost})`
-                // }
-            }
         }
-        console.log(template)
         return template
     }
 
+    update(player = null) {
+        var template = this.element
+        // If player can buy card, add 'buyable'
+        if (player != null && player.canBuyCard(this.card)) {
+            template.classList.add('buyable')
+            template.setAttribute("onclick", `Game.buyCard('${this.card.obj_id}')`)
+        } else {
+            template.classList.remove('buyable')
+        }
 
+        for (const [color, cost] of Object.entries(this.card.cost)) {
+            if (player != null) {
+                let score = player.getColorScore(color)
+
+                template.querySelector(`#cost_${color}`).setAttribute('style', `width: ${Math.min(score * 100 / cost, 100)}%`);
+
+                if (cost > score) {
+                    template.querySelector(`#cost_${color}`).innerHTML = `${score}/${cost}`;
+                    template.querySelector(`#cost2_${color}`).setAttribute('style', `width: ${100 - (score * 100 / cost)}%`);
+                }
+                if (cost <= score) {
+                    template.querySelector(`#cost_${color}`).innerHTML = cost;
+                    template.querySelector(`#cost2_${color}`).setAttribute('style', `width:0%`);
+                }
+
+                if (score == 0) template.querySelector(`#cost2_${color}`).innerHTML = cost;
+                else template.querySelector(`#cost2_${color}`).innerHTML = ""
+
+            }
+        }
+    }
+
+    delete() {
+        this.parent_div.removeChild(this.element);
+    }
+}
+
+class HiddenCardElement {
+    constructor(level, parent_div) {
+        this.level = level;
+        this.element_id = `hiddencard-${this.level}`;
+        this.parent_div = parent_div
+        this.parent_div.append(this.getHTML())
+        this.element = this.parent_div.querySelector(`#${this.element_id}`)
+    }
+
+    getTemplate() {
+        return document.getElementById("HiddenCardTemplate").content.cloneNode(true);
+    }
+    // Generate element with all static data
+    getHTML() {
+        var template = this.getTemplate()
+        // template.firstElementChild.classList.add(`hiddencard-${this.level}`)
+        template.firstElementChild.id = this.element_id;
+        return template
+    }
+
+    update(data) {
+        var template = this.element
+        console.log(23123)
+        let cards_count = data['cards_in_deck'][this.level] - 5
+        if (cards_count <= 0) {
+            return -1
+        }
+        template.querySelector("#value").innerHTML = cards_count
+        return 0
+    }
+
+    delete() {
+        this.parent_div.removeChild(this.element);
+    }
 }

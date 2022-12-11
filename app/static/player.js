@@ -1,8 +1,9 @@
 
 class Player {
-    constructor(name, data) {
+    constructor(name, data, winner_round = null) {
         this.name = name;
         this.cards = [];
+        this.winner_round = winner_round;
         for (const [card_id, card_data] of Object.entries(data['cards'])) {
             this.cards.push(new Card(card_data))
         }
@@ -11,7 +12,7 @@ class Player {
 
     getColorScore(color_name) {
         var score = 0;
-        score += this.getColorCardScore()
+        score += this.getColorCardScore(color_name)
         score += this.coins[color_name]
         return score
     }

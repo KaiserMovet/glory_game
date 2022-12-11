@@ -1,4 +1,5 @@
 import collections
+import logging
 from datetime import datetime
 from typing import Dict, NamedTuple, Set, Tuple
 from uuid import uuid4
@@ -23,6 +24,14 @@ class Games:
             if player_name in [player.name for player in game.game.players]:
                 return game.game
         return None
+
+    def delete_game_by_player(self, player_name: str) -> None:
+        for game_id, game in self.games.items():
+            if player_name in [player.name for player in game.game.players]:
+                logging.warning(f"Removing game with id {game_id}")
+                del self.games[game_id]
+                return
+        return
 
     def new_game(self, names: Set[str]) -> str:
         """

@@ -17,7 +17,7 @@ class Inventory:
 
     @property
     def points(self) -> int:
-        return sum([card.value for card in self.cards])
+        return sum([card.value for card in self.cards.values()])
 
     def get_data(self) -> dict:
 
