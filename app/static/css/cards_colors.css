@@ -1,5 +1,7 @@
 .card--blue {
     background: linear-gradient(120deg, var(--blue1) 10%, var(--blue2) 100%);
+    filter: drop-shadow(0 0 0.5rem var(--blue1));
+
 }
 
 .card--blue .card__value {
@@ -8,6 +10,7 @@
 
 .card--red {
     background: linear-gradient(0deg, var(--red1) 10%, var(--red2) 100%);
+    filter: drop-shadow(0 0 0.5rem var(--red1));
 }
 
 .card--red .card__value {
@@ -17,7 +20,8 @@
 
 .card--black {
     background: linear-gradient(20deg, var(--black1) 10%, var(--black2) 100%);
-    /* color: rgb(194, 194, 194) */
+    filter: drop-shadow(0 0 0.5rem var(--black1));
+
 }
 
 .card--black .card__value {
@@ -26,6 +30,8 @@
 
 .card--green {
     background: linear-gradient(140deg, var(--green1) 10%, var(--green2) 100%);
+    filter: drop-shadow(0 0 0.5rem var(--green2));
+
 }
 
 .card--green .card__value {
@@ -34,6 +40,8 @@
 
 .card--white {
     background: linear-gradient(230deg, var(--white1) 10%, var(--white2) 100%);
+    filter: drop-shadow(0 0 0.5rem var(--white2));
+
 }
 
 .card--white .card__value {
@@ -65,7 +73,8 @@
 }
 
 .card-bg-white {
-    background-color: var(--white1);
+    background-color: var(--white2);
+    color: black
 }
 
 .card-bg2-blue {
@@ -86,7 +95,7 @@
 }
 
 .card-bg2-white {
-    background-color: var(--white2);
+    background-color: var(--white1);
 }
 
 .solid {
@@ -117,10 +126,3 @@
     border-color: var(--white1);
     background-color: var(--white2);
 }
-
-
-.hiddencard-1 {}
-
-.hiddencard-2 {}
-
-.hiddencard-3 {}

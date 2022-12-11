@@ -12,11 +12,17 @@
     --green2: rgba(39, 80, 9, 1);
 
     --white1: rgb(93, 93, 93);
-    --white2: rgb(212, 212, 212);
+    --white2: rgb(255, 204, 0);
 
     --transparent: rgba(0, 0, 0, 0);
 
     --deck1: rgba(77, 77, 255);
     --deck2: rgba(68, 214, 44);
     --deck3: rgba(224, 231, 34);
+
+    --buyable: rgb(255, 0, 204);
+    --buyable_trans50: rgb(255, 0, 204, 0.5);
+    --buyable_trans75: rgb(255, 0, 204, 0.75);
+
+
 }

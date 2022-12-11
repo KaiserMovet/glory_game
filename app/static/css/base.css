@@ -25,9 +25,8 @@ h5 {
 
 
 .inventory {
-    /* display: flex;
-    flex-direction: row;
-    margin: 20px */
+    display: inline-flex;
+    justify-content: center;
 }
 
 .inventory>* {
@@ -51,7 +50,7 @@ h5 {
 
 
 .deck1>.hiddencard {
-    background: var(--deck1);
+    background: radial-gradient(var(--deck1) 0%, var(--buyable) 90%);
 }
 
 
@@ -62,7 +61,7 @@ h5 {
 }
 
 .deck2>.hiddencard {
-    background: var(--deck2);
+    background: radial-gradient(var(--deck2) 0%, var(--buyable) 90%);
 }
 
 
@@ -73,5 +72,5 @@ h5 {
 }
 
 .deck3>.hiddencard {
-    background: var(--deck3);
+    background: radial-gradient(var(--deck3) 0%, var(--buyable) 90%);
 }

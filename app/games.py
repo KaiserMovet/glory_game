@@ -1,10 +1,26 @@
 import collections
 import logging
-from datetime import datetime
-from typing import Dict, NamedTuple, Set, Tuple
+import sched
+import threading
+import time
+import traceback
+from datetime import datetime, timedelta
+from pprint import pprint
+from typing import Dict, List, NamedTuple, Set, Tuple
 from uuid import uuid4
 
+from apscheduler.schedulers.background import BackgroundScheduler
+
 from game import Game
+
+scheduler = BackgroundScheduler()
+scheduler.start()
+
+
+@scheduler.scheduled_job(trigger="interval", minutes=15)
+def cleanup():
+    GAMES.cleanup()
+    pass
 
 
 class GameTuple(NamedTuple):
@@ -15,6 +31,17 @@ class GameTuple(NamedTuple):
 class Games:
     def __init__(self) -> None:
         self.games: Dict[str, GameTuple] = {}
+
+    def cleanup(self) -> None:
+
+        pprint(self.games)
+        games_to_remove: List[str] = []
+        for game_id, game in self.games.items():
+            if game.time < datetime.now() - timedelta(hours=1):
+                games_to_remove.append(game_id)
+        for game_id in games_to_remove:
+            logging.warning(f"Removing game with id {game_id}")
+            del self.games[game_id]
 
     def get_game(self, game_id: str) -> Game:
         return self.games[game_id].game

@@ -1,21 +1,26 @@
 .chip--black {
     background: radial-gradient(var(--black1), var(--black2));
+    filter: drop-shadow(0 0 0.5rem var(--black1));
 }
 
 .chip--blue {
     background: radial-gradient(var(--blue1), var(--blue2));
+    filter: drop-shadow(0 0 0.5rem var(--blue1));
 }
 
 .chip--green {
     background: radial-gradient(var(--green1), var(--green2));
+    filter: drop-shadow(0 0 0.5rem var(--green1));
 }
 
 .chip--red {
     background: radial-gradient(var(--red1), var(--red2));
+    filter: drop-shadow(0 0 0.5rem var(--red1));
 }
 
 .chip--white {
     background: radial-gradient(var(--white1), var(--white2));
+    filter: drop-shadow(0 0 0.5rem var(--white2));
 }
 
 .chips:hover .chip {
@@ -41,9 +46,9 @@
     font-weight: bold;
     border-radius: 32pt;
     width: 32pt;
-    border: 2px solid #FFF;
-    border-top: 3px solid #FFF;
-    border-bottom: 0px solid #FFF;
+    border: 2px solid black;
+    border-top: 3px solid black;
+    border-bottom: 0px solid black;
     height: 32pt;
     -webkit-box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.2);
@@ -98,7 +103,7 @@
 }
 
 .chips-busket {
-    background: rgba(141, 141, 141, 0.338);
+    background: radial-gradient(rgba(255, 0, 217, 0.338) 0%, var(--transparent) 60%);
     height: 6em;
 }
 
