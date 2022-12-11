@@ -359,8 +359,9 @@ class ScoreTable {
         for (const [name, player] of Object.entries(players)) {
             let row = document.getElementById(`sc_row_${name}`)
             if (active_player_name == name) {
-                row.classList.add("table-active")
-            } else row.classList.remove("table-active")
+                row.classList.add("table-primary")
+
+            } else row.classList.remove("table-primary")
             row.querySelector("#sc_score").innerHTML = player.getTotalScore()
             row.querySelector("#sc_black").innerHTML = `${player.getColorCardScore('black')} + ${player.coins["black"]}`
             row.querySelector("#sc_blue").innerHTML = `${player.getColorCardScore('blue')} + ${player.coins["blue"]}`
@@ -415,11 +416,9 @@ class Inter {
 }
 
 function delete_game() {
-    RequestManager.getData(
-        aUrl = `/api/player/${Game.getPlayerName()}/delete_game`,
-        aCallback = render,
-        body = null,
-    );
+    let local = window.location.origin;
+    window.location.replace(local + `/api/player/${Game.getPlayerName()}/delete_game`);
+
 
 }
 

@@ -51,7 +51,7 @@ h5 {
 
 
 .deck1>.hiddencard {
-    background: rgba(0, 119, 255);
+    background: var(--deck1);
 }
 
 
@@ -62,7 +62,7 @@ h5 {
 }
 
 .deck2>.hiddencard {
-    background: rgba(18, 154, 68);
+    background: var(--deck2);
 }
 
 
@@ -73,5 +73,5 @@ h5 {
 }
 
 .deck3>.hiddencard {
-    background: rgba(220, 190, 17);
+    background: var(--deck3);
 }

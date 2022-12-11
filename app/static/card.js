@@ -1,5 +1,5 @@
 ColorsBG = {
-    black: 14, white: 10, red: 10, green: 13, blue: 12
+    black: 24, white: 21, red: 27, green: 27, blue: 33
 }
 
 class Card {
