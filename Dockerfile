@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM 3.11.1-bullseye
+FROM python:latest
 
 WORKDIR /app
 
