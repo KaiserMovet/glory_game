@@ -13,7 +13,7 @@ class Inventory:
 
     def __post_init__(self):
         for color in Color:
-            self.coins[color.value] = 2
+            self.coins[color.value] = 0
 
     @property
     def points(self) -> int:
